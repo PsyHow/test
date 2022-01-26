@@ -2,15 +2,15 @@ import { FC, useEffect, useRef } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import style from 'components/Tasks/Tasks.module.css';
-import { AppRootState } from 'redux/store';
 import {
+  AppRootState,
   deleteTask,
   getTasks,
   setAllChecked,
   setChecked,
   TaskType,
-} from 'redux/taskListReducer';
+} from 'bll';
+import style from 'components/Tasks/Tasks.module.css';
 
 export const Tasks: FC = () => {
   const dispatch = useDispatch();
@@ -24,14 +24,14 @@ export const Tasks: FC = () => {
     dispatch(getTasks());
   }, []);
 
-  const getArrayOfRefs = (el: any): void => {
+  const getArrayOfRefs = (el: HTMLInputElement): void => {
     if (el && !arrayCheckboxRef.current.includes(el)) {
       arrayCheckboxRef.current.push(el);
     }
   };
 
   const deleteTaskHandle = (): void => {
-    const id = [] as number[];
+    const id = [] as string[];
     taskList.forEach(task => {
       if (task.isActive) {
         id.push(task.id);

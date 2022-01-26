@@ -1,28 +1,28 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { FC, FormEvent } from 'react';
 
 import { useDispatch } from 'react-redux';
 
 import style from './Form.module.css';
 
-import { addTask } from 'redux/taskListReducer';
+import { addTask } from 'bll';
+import { useInputHook } from 'hooks';
 
 export const Form: FC = () => {
   const dispatch = useDispatch();
-  const [taskTitle, setTaskTitle] = useState<string>('');
-  const [taskDescription, setTaskDescription] = useState<string>('');
 
-  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>): void => {
-    setTaskTitle(e.currentTarget.value);
-  };
+  const [title, description, error, setError, onChangeTitle, onChangeDescription] =
+    useInputHook();
 
-  const onChangeDescription = (e: ChangeEvent<HTMLInputElement>): void => {
-    setTaskDescription(e.currentTarget.value);
-  };
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    dispatch(addTask(taskTitle, taskDescription));
-    setTaskTitle('');
-    setTaskDescription('');
+    if (title === '' || description === '') {
+      setError('Title and description Required');
+    }
+    if (title.length < 3 || description.length < 3) {
+      setError('Minimum Length 3');
+    } else {
+      dispatch(addTask(title, description));
+    }
   };
 
   return (
@@ -31,16 +31,17 @@ export const Form: FC = () => {
         <input
           type="text"
           placeholder="enter task Title"
-          value={taskTitle}
+          value={title}
           onChange={onChangeTitle}
         />
         <input
           type="text"
           placeholder="enter task description"
-          value={taskDescription}
+          value={description}
           onChange={onChangeDescription}
         />
         <button type="submit">Add Task</button>
+        {error ? <span>{error}</span> : <span> </span>}
       </div>
     </form>
   );

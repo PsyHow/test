@@ -25,3 +25,9 @@
 .form button {
     width: 145px;
 }
+
+.form span {
+    margin-top: 10px;
+    height: 20px;
+    color: #bb0101
+}

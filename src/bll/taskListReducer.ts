@@ -1,10 +1,12 @@
-import { ACTION_TYPE } from 'enums/enums';
+import { v1 } from 'uuid';
+
+import { ACTION_TYPE } from 'enums';
 
 const initialState = {
   initial: [
-    { id: 1, title: 'task1', description: 'need to do', isActive: false },
-    { id: 2, title: 'task2', description: 'need to do2', isActive: false },
-    { id: 3, title: 'task3', description: 'need to do3', isActive: false },
+    { id: v1(), title: 'task1', description: 'need to do', isActive: false },
+    { id: v1(), title: 'task2', description: 'need to do2', isActive: false },
+    { id: v1(), title: 'task3', description: 'need to do3', isActive: false },
   ],
   tasks: [] as TaskType[],
 };
@@ -17,7 +19,7 @@ export const taskList = (state = initialState, action: ActionTypes): InitialStat
         tasks: [
           ...state.tasks,
           {
-            id: 4,
+            id: v1(),
             title: action.payload.title,
             description: action.payload.description,
             isActive: false,
@@ -64,7 +66,7 @@ export const addTask = (title: string, description: string) =>
     payload: { title, description },
   } as const);
 
-export const setChecked = (id: number, checked: boolean) =>
+export const setChecked = (id: string, checked: boolean) =>
   ({
     type: ACTION_TYPE.SET_CHECKED,
     payload: { id, checked },
@@ -76,7 +78,7 @@ export const setAllChecked = (checked: boolean) =>
     payload: checked,
   } as const);
 
-export const deleteTask = (id: number[]) =>
+export const deleteTask = (id: string[]) =>
   ({
     type: ACTION_TYPE.DELETE_TASK,
     payload: id,
@@ -88,6 +90,7 @@ export const getTasks = () =>
   } as const);
 
 type InitialStateType = typeof initialState;
+
 type ActionTypes =
   | ReturnType<typeof addTask>
   | ReturnType<typeof setChecked>
@@ -96,7 +99,7 @@ type ActionTypes =
   | ReturnType<typeof getTasks>;
 
 export type TaskType = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   isActive: boolean;

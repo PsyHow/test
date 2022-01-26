@@ -1,6 +1,6 @@
 import { combineReducers, createStore } from 'redux';
 
-import { taskList } from 'redux/taskListReducer';
+import { taskList } from 'bll/taskListReducer';
 
 const reducers = combineReducers({
   taskList,

@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
-import { Form } from 'components/Form/Form';
-import { Tasks } from 'components/Tasks/Tasks';
+import { Form, Tasks } from 'components';
 
 const App: FC = () => (
   <div>
