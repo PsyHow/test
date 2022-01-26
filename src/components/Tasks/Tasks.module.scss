@@ -1,0 +1,14 @@
+.box {
+  display: flex;
+  align-items: center;
+
+  & h1 {
+    margin-right: 40px;
+    border: 1px solid black;
+  }
+
+  & input {
+    width: 30px;
+    height: 30px;
+  }
+}
