@@ -2,7 +2,7 @@ import { FC, useEffect, useRef } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import style from 'components/Tasks/Tasks.module.scss';
+import style from 'components/Tasks/Tasks.module.css';
 import { AppRootState } from 'redux/store';
 import {
   deleteTask,
@@ -50,31 +50,47 @@ export const Tasks: FC = () => {
 
   return (
     <div>
-      <input type="checkbox" ref={checkboxRef} onChange={setToggleAllCheckbox} />
-      <button type="button" onClick={fetchInitialState}>
-        Reset
-      </button>
-      {taskList.map(({ id, title, description, isActive }, index) => {
-        const handleChecked = (): void => {
-          dispatch(setChecked(id, arrayCheckboxRef.current[index].checked));
-        };
+      <table className={style.table}>
+        <thead>
+          <tr>
+            <td>
+              <input type="checkbox" ref={checkboxRef} onChange={setToggleAllCheckbox} />
+            </td>
+            <td>Title</td>
+            <td>Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          {taskList.map(({ id, title, description, isActive }, index) => {
+            const handleChecked = (): void => {
+              dispatch(setChecked(id, arrayCheckboxRef.current[index].checked));
+            };
 
-        return (
-          <div className={style.box} key={id}>
-            <h1>{title}</h1>
-            <h1>{description}</h1>
-            <input
-              ref={getArrayOfRefs}
-              type="checkbox"
-              checked={isActive}
-              onChange={handleChecked}
-            />
-          </div>
-        );
-      })}
-      <button type="button" onClick={deleteTaskHandle}>
-        Delete Task
-      </button>
+            return (
+              <tr key={id}>
+                <td>
+                  <input
+                    ref={getArrayOfRefs}
+                    type="checkbox"
+                    checked={isActive}
+                    onChange={handleChecked}
+                  />
+                </td>
+                <td>{title}</td>
+                <td>{description}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <div className={style.settings}>
+        <button type="button" onClick={fetchInitialState}>
+          Reset
+        </button>
+        <button type="button" onClick={deleteTaskHandle}>
+          Delete Task
+        </button>
+      </div>
     </div>
   );
 };

@@ -2,6 +2,8 @@ import { ChangeEvent, FC, FormEvent, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 
+import style from './Form.module.css';
+
 import { addTask } from 'redux/taskListReducer';
 
 export const Form: FC = () => {
@@ -24,20 +26,22 @@ export const Form: FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="enter task Title"
-        value={taskTitle}
-        onChange={onChangeTitle}
-      />
-      <input
-        type="text"
-        placeholder="enter task description"
-        value={taskDescription}
-        onChange={onChangeDescription}
-      />
-      <button type="submit">Add Task</button>
+    <form className={style.form} onSubmit={handleSubmit}>
+      <div>
+        <input
+          type="text"
+          placeholder="enter task Title"
+          value={taskTitle}
+          onChange={onChangeTitle}
+        />
+        <input
+          type="text"
+          placeholder="enter task description"
+          value={taskDescription}
+          onChange={onChangeDescription}
+        />
+        <button type="submit">Add Task</button>
+      </div>
     </form>
   );
 };
